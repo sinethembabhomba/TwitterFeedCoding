@@ -9,9 +9,9 @@ namespace TwitterFeedCodingUnitTest
 {
     public class TwitterFeedUnitTest : IDisposable
     {
-        readonly string tweet = @"C:\datatxt\tweet.tx";
-        readonly string user = @"C:\datatxt\user.tx";
-        private  ITweetsFeedsRepo _tweetsFeedsRepo = new TweetsFeedsRepo();
+        readonly string tweet = @"C:\tweet.tx";
+        readonly string user = @"C:\user.tx";
+        private ITweetsFeedsRepo _tweetsFeedsRepo = new TweetsFeedsRepo();
         List<string> actuallyResults = new();
         List<string> expected = new();
         List<string> expectedTweet = new();
@@ -19,7 +19,7 @@ namespace TwitterFeedCodingUnitTest
         // setup
         public TwitterFeedUnitTest()
         {
-          
+
             // Create a new file     
             using (StreamWriter sw = File.CreateText(tweet))
             {
@@ -38,47 +38,48 @@ namespace TwitterFeedCodingUnitTest
                 sw.WriteLine("Ward follows Martin, Alan");
             }
 
-            expected = new(){ "Ward follows Alan", "Alan follows Martin", "Ward follows Martin, Alan" };
+            //Create expected results when you pass file named user
+            expected = new() { "Ward follows Alan", "Alan follows Martin", "Ward follows Martin, Alan" };
 
+            //Create expected results when you pass file named tweet
             expectedTweet = new()
             {
                 "Alan> If you have a procedure with 10 parameters, you probably missed some.",
                 "Ward> There are only two hard things in Computer Science: cache invalidation, naming things and off-by-1 errors.",
                 "Alan> Random numbers should not be generated with a method chosen at random."
             };
-
         }
+
         [Fact]
-       public void GetTweetByOneArgument_GivenUserFileNamedUser_ReturnsTweetUsersAndWhoTheyAreFollowing()
+        public void GetTweetByOneArgument_GivenUserFileNamedUser_ReturnsTweetUsersAndWhoTheyAreFollowing()
         {
-            
-                //Arrange
-                var argument = "user";
-             
-                //Act
-                var result = _tweetsFeedsRepo.GetUsersOrUserAndTheirTweet(argument);
 
-            foreach (var user in result.User)
+            //Arrange
+            var user = "user";
+
+            //Act
+            var result = _tweetsFeedsRepo.GetUsersOrUserAndTheirTweet(user);
+
+            foreach (var userName in result.User)
             {
-                actuallyResults.Add(user.UserName);
+                actuallyResults.Add(userName.UserName);
             }
-
 
             //Assert
             Assert.NotNull(result);
             Assert.Equal(3, result.User.Count);
-            Assert.Equal(expected,actuallyResults);
-                
+            Assert.Equal(expected, actuallyResults);
+
         }
 
-       [Fact]
-       public void GetTweetByOneArgument_GivenTweetFileNamedTweet_ReturnsUsersTheirTweets()
+        [Fact]
+        public void GetTweetByOneArgument_GivenTweetFileNamedTweet_ReturnsUsersAndTheirTweets()
         {
             //Arrange
-            var argument = "tweet";
+            var tweet = "tweet";
 
             //Act
-            var result = _tweetsFeedsRepo.GetUsersOrUserAndTheirTweet(argument);
+            var result = _tweetsFeedsRepo.GetUsersOrUserAndTheirTweet(tweet);
 
             foreach (var user in result.User)
             {
@@ -87,38 +88,37 @@ namespace TwitterFeedCodingUnitTest
 
             //Assert
             Assert.NotNull(result);
-            Assert.Equal(3,result.User.Count);
-            Assert.Equal(expectedTweet,actuallyResults);
+            Assert.Equal(3, result.User.Count);
+            Assert.Equal(expectedTweet, actuallyResults);
         }
 
-       [Fact]
-       public void GetTweetByUserAndTweet_InvokingYourProgramWithUserAndTweetAsArguments_ReturnsUsersTheirTweetsAndTheirFollowingsTweets()
+        [Fact]
+        public void GetTweetByUserAndTweet_InvokingYourProgramWithUserAndTweetAsArguments_ReturnsUsersTheirTweetsAndTheirFollowingsTweets()
         {
             // Arrange
-
             var tweet = "tweet";
             var user = "user";
 
             //Act
+            var result = _tweetsFeedsRepo.GetUsersAndTheirListOfTweetsAndTheirFollowingTweets(user, tweet);
 
-            var result = _tweetsFeedsRepo.GetUsersAndTheirListOfTweetsAndTheirFollowingTweets(user,tweet);
-
+            //Assert
             Assert.NotNull(result);
             Assert.Equal(3, result.Tweets.Count);
-
         }
 
-       [Fact]
-       public void InvalidFileName_PassInvalidFileName_ReturnsErrorMessageStatingFileIsPathIsInvalid()
+        [Fact]
+        public void InvalidFileName_PassInvalidFileName_ReturnsErrorMessageStatingFileIsPathIsInvalid()
         {
             // Arrange
-            var tweet = "tweetInvalid";
+            var invalidFile = "invalidFileInput";
 
             //Act
-            var result = _tweetsFeedsRepo.GetUsersOrUserAndTheirTweet(tweet);
+            var result = _tweetsFeedsRepo.GetUsersOrUserAndTheirTweet(invalidFile);
 
+            //Assert
             Assert.NotNull(result);
-            Assert.Equal("Could not find file 'C:\\datatxt\\tweetInvalid.txt'.", result.ErrorMessages.Error);
+            Assert.Equal("Could not find file 'C:\\MockTweetData\\invalidFileInput.txt'.", result.ErrorMessages.Error);
         }
 
         public void Dispose()
