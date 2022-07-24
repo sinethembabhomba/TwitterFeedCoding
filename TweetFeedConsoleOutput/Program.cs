@@ -11,8 +11,8 @@ var serviceProvider = new ServiceCollection()
 
 var tweeterFeeds = serviceProvider.GetService<ITweetsFeedsRepo>();
 
-string firstArgument = "";
-string secondArgument = "";
+string user = "";
+string tweet = "";
 
 TwitterFeeds myTweets = new();
 
@@ -37,10 +37,10 @@ do
             throw new FormatException("No input provided");
         }
 
-        if(!inputValue.Equals("User", StringComparison.InvariantCultureIgnoreCase)  &&
-            !inputValue.Equals("Tweet", StringComparison.InvariantCultureIgnoreCase) &&
-            !inputValue.Equals("User and Tweet", StringComparison.InvariantCultureIgnoreCase)&&
-            !inputValue.Equals("Exit", StringComparison.InvariantCultureIgnoreCase))
+        if(!inputValue.Trim().Equals("User", StringComparison.InvariantCultureIgnoreCase)  &&
+            !inputValue.Trim().Equals("Tweet", StringComparison.InvariantCultureIgnoreCase) &&
+            !inputValue.Trim().Equals("User and Tweet", StringComparison.InvariantCultureIgnoreCase)&&
+            !inputValue.Trim().Equals("Exit", StringComparison.InvariantCultureIgnoreCase))
         {
             throw new FormatException("Please choose valid option");
         }
@@ -58,21 +58,19 @@ do
         {
             foreach(var item in input)
             {
-                var checkedValue = item.ToLower();
-
-                if(firstArgument == "")
+                if(item.Trim().Equals("user", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    firstArgument = item;
+                    user = item.Trim();
                 }
-                else if(secondArgument == "")
+                else if(item.Trim().Equals("tweet", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    secondArgument = item;
+                    tweet = item.Trim();
                 }
             }
 
-            if(firstArgument != "" && secondArgument != "") 
+            if((!string.IsNullOrEmpty(user))&&  (!string.IsNullOrEmpty(tweet))) 
             {
-                myTweets = tweeterFeeds.GetUsersAndTheirListOfTweetsAndTheirFollowingTweets(firstArgument, secondArgument);
+                myTweets = tweeterFeeds.GetUsersAndTheirListOfTweetsAndTheirFollowingTweets(user, tweet);
             }
             else
             {
@@ -102,5 +100,5 @@ do
         Console.WriteLine();
     }
 }
-while (!inputValue.ToString().Equals("Exit",StringComparison.InvariantCultureIgnoreCase));
+while (!inputValue.Trim().ToString().Equals("Exit",StringComparison.InvariantCultureIgnoreCase));
 Console.Read();
