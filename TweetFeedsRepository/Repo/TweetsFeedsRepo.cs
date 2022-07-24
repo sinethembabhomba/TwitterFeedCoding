@@ -46,7 +46,6 @@ namespace TweetFeedsRepository.Repo
             List<Tweets> getMyTweets = GetMyTweets(tweet).Tweets.ToList();
             List<string> MyTweetsSummary = new();
 
-
             try
             {
            
