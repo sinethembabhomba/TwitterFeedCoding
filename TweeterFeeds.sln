@@ -9,15 +9,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{131EC8AD-0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{83DC4A06-7267-4766-B7F9-CFD56D3A4934}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetFeedsEntities", "TweetFeedsEntities\TweetFeedsEntities.csproj", "{4D4AE692-1185-48AB-8F85-E1AAFFCA4E5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TweetFeedsEntities", "TweetFeedsEntities\TweetFeedsEntities.csproj", "{4D4AE692-1185-48AB-8F85-E1AAFFCA4E5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetFeedsRepository", "TweetFeedsRepository\TweetFeedsRepository.csproj", "{6DE65215-B65D-4732-862A-56D975E5353C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TweetFeedsRepository", "TweetFeedsRepository\TweetFeedsRepository.csproj", "{6DE65215-B65D-4732-862A-56D975E5353C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetFeedConsoleOutput", "TweetFeedConsoleOutput\TweetFeedConsoleOutput.csproj", "{A420C523-665D-422F-99F5-B2F12DCD6A62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TweetFeedConsoleOutput", "TweetFeedConsoleOutput\TweetFeedConsoleOutput.csproj", "{A420C523-665D-422F-99F5-B2F12DCD6A62}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{11083F30-4FAB-4BEC-A6F6-C5B55C320F57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterFeedCodingUnitTest", "TwitterFeedCodingUnitTest\TwitterFeedCodingUnitTest.csproj", "{514C909F-87AE-4179-9897-EC894803C7F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterFeedCodingUnitTest", "TwitterFeedCodingUnitTest\TwitterFeedCodingUnitTest.csproj", "{514C909F-87AE-4179-9897-EC894803C7F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MockTweetData", "MockTweetData", "{43819C76-AB9E-4C99-8DF5-639436D91C0A}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\..\datatxt\tweet.txt = ..\..\..\..\..\datatxt\tweet.txt
+		..\..\..\..\..\datatxt\user.txt = ..\..\..\..\..\datatxt\user.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
