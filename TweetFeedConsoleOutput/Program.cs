@@ -3,19 +3,20 @@ using Microsoft.Extensions.DependencyInjection;
 using TweetFeedsEntities;
 using TweetFeedsRepository.Contracts;
 using TweetFeedsRepository.Repo;
+
 //setup our DI
 var serviceProvider = new ServiceCollection()
-    .AddSingleton<ITweetsFeedsRepo,TweetsFeedsRepo>()
-    .BuildServiceProvider();
+                     .AddSingleton<ITweetsFeedsRepo,TweetsFeedsRepo>()
+                     .BuildServiceProvider();
 
 var tweeterFeeds = serviceProvider.GetService<ITweetsFeedsRepo>();
 
 string firstArgument = "";
 string secondArgument = "";
 
-var myTweets = new TwitterFeeds();
+TwitterFeeds myTweets = new();
 
-var str = String.Empty;
+var inputValue = String.Empty;
 Console.WriteLine("-------------- Twitter Feed Coding Assignment ------------");
 do
 {
@@ -29,28 +30,28 @@ do
         Console.WriteLine("\t - Exit to stop application ");
         Console.WriteLine();
         Console.Write("Your option? : ");
-    
-        str = Console.ReadLine();
-        if (string.IsNullOrEmpty(str))
+
+        inputValue = Console.ReadLine();
+        if (string.IsNullOrEmpty(inputValue))
         {
             throw new FormatException("No input provided");
         }
 
-        if(!str.Equals("User", StringComparison.InvariantCultureIgnoreCase)  &&
-            !str.Equals("Tweet", StringComparison.InvariantCultureIgnoreCase) &&
-            !str.Equals("User and Tweet", StringComparison.InvariantCultureIgnoreCase)&&
-            !str.Equals("Exit", StringComparison.InvariantCultureIgnoreCase))
+        if(!inputValue.Equals("User", StringComparison.InvariantCultureIgnoreCase)  &&
+            !inputValue.Equals("Tweet", StringComparison.InvariantCultureIgnoreCase) &&
+            !inputValue.Equals("User and Tweet", StringComparison.InvariantCultureIgnoreCase)&&
+            !inputValue.Equals("Exit", StringComparison.InvariantCultureIgnoreCase))
         {
             throw new FormatException("Please choose valid option");
         }
         
-        string[] input = str.Split("and");
+        string[] input = inputValue.Split("and");
 
         Console.WriteLine();
 
         if (input.Length == 1)
         {
-            var givenFileName = tweeterFeeds.GetUsersOrUserAndTheirTweet(str);
+            var givenFileName = tweeterFeeds.GetUsersOrUserAndTheirTweet(inputValue);
 
             if(givenFileName != null)
             {
@@ -108,5 +109,5 @@ do
         Console.WriteLine();
     }
 }
-while (!str.ToString().Equals("Exit",StringComparison.InvariantCultureIgnoreCase));
+while (!inputValue.ToString().Equals("Exit",StringComparison.InvariantCultureIgnoreCase));
 Console.Read();
