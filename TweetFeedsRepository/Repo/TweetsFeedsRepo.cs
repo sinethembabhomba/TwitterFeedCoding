@@ -13,27 +13,16 @@ namespace TweetFeedsRepository.Repo
 
         public TwitterFeeds GetUsersOrUserAndTheirTweet(string filename)
         {
-            List<string> list = new();
-
             TwitterFeeds UserNametweets = new();
        
             try
             {
-                using (StreamReader sr = new(_path+filename+".txt"))
+                using (StreamReader sr = File.OpenText(_path+filename + ".txt"))
                 {
-                    string line;
-                    while ((line = sr.ReadLine()) != null)
-                    {
-                        list.Add(line);
-                    }
+                    string s = sr.ReadToEnd();
+                    UserNametweets.Results = s;
                 }
-
-                foreach (var users in list)
-                {
-                    UserNametweets.User.Add(new User() { UserName = users });
-                   
-                }
-
+              
                 return UserNametweets;
             }
             catch (Exception ex)

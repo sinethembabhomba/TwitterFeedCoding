@@ -60,14 +60,17 @@ namespace TwitterFeedCodingUnitTest
             //Act
             var result = _tweetsFeedsRepo.GetUsersOrUserAndTheirTweet(user);
 
-            foreach (var userName in result.User)
+            foreach (var userName in result.Results.Split("\r\n"))
             {
-                actuallyResults.Add(userName.UserName);
+                if (userName != "")
+                {
+                    actuallyResults.Add(userName);
+                }
             }
 
             //Assert
             Assert.NotNull(result);
-            Assert.Equal(3, result.User.Count);
+            Assert.Equal(3, actuallyResults.Count);
             Assert.Equal(expected, actuallyResults);
 
         }
@@ -79,16 +82,19 @@ namespace TwitterFeedCodingUnitTest
             var tweet = "tweet";
 
             //Act
-            var result = _tweetsFeedsRepo.GetUsersOrUserAndTheirTweet(tweet);
+            var result = _tweetsFeedsRepo.GetUsersOrUserAndTheirTweet(tweet).Results;
 
-            foreach (var user in result.User)
+            foreach (var user in result.Split("\r\n"))
             {
-                actuallyResults.Add(user.UserName);
+                if (user != "")
+                {
+                    actuallyResults.Add(user);
+                }
             }
 
             //Assert
             Assert.NotNull(result);
-            Assert.Equal(3, result.User.Count);
+            Assert.Equal(3,actuallyResults.Count);
             Assert.Equal(expectedTweet, actuallyResults);
         }
 

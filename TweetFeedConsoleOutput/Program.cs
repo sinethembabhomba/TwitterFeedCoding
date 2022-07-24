@@ -51,15 +51,8 @@ do
 
         if (input.Length == 1)
         {
-            var givenFileName = tweeterFeeds.GetUsersOrUserAndTheirTweet(inputValue);
-
-            if(givenFileName != null)
-            {
-                foreach(var item in givenFileName.User)
-                {
-                    Console.WriteLine(item.UserName);
-                }
-            }
+            var givenFileName = tweeterFeeds.GetUsersOrUserAndTheirTweet(inputValue).Results;
+            Console.WriteLine(givenFileName);  
         }
         else
         {
